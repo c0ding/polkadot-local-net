@@ -1,0 +1,27 @@
+version: "3.7"
+services:
+  relaychain-1:
+    ports:
+      - 9944:9944
+      - 9933:9933
+      - 30333:30333
+    volumes:
+      - relaychain-1:/data
+    build:
+      context: .
+      dockerfile: relaychain.Dockerfile
+    command:
+      - --base-path=/data
+      - --chain=/app/polkadot-local.json
+      - --validator
+      - --ws-external
+      - --rpc-external
+      - --rpc-cors=all
+      - --name=relay-1
+      - --rpc-methods=unsafe
+      - --wasm-execution=compiled
+      - --execution=wasm
+      - --bootnodes=/ip4/172.99.39.206/tcp/30333/p2p/12D3KooWSW78yqth6ysyK4Bc3dquKBZF68MqUKT8irD8qbKe2KjY
+volumes:
+  ? relaychain-1
+
