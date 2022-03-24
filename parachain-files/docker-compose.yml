@@ -1,0 +1,62 @@
+version: "3.7"
+services:
+   parachain-1:
+      ports:
+       - 9944:9944
+       - 9933:9933
+       - 30333:30333
+      volumes:
+       - parachain-1:/data
+      build:
+        context: .
+        dockerfile: parachain.Dockerfile
+      command:
+          - --base-path=/data
+          - --chain=/app/kerria-dev-2012.json
+          - --ws-external
+          - --rpc-external
+          - --rpc-cors=all
+          - --name=parachain-1
+          - --collator
+          - --rpc-methods=unsafe
+          - --force-authoring
+          - --wasm-execution=compiled
+          - --execution=wasm
+          - --bootnodes=/ip4/172.99.39.206/tcp/30337/p2p/12D3KooWHmC8ugzku81MSi68JaQ5pzrBQWhnXW9cCXXebkEeQpUL
+          - --
+          - --chain=/app/polkadot-local.json
+          - --bootnodes=/ip4/172.99.39.206/tcp/30333/p2p/12D3KooWSW78yqth6ysyK4Bc3dquKBZF68MqUKT8irD8qbKe2KjY
+          - --wasm-execution=compiled
+          - --execution=wasm
+   parachain-2:
+      ports:
+       - 9945:9944
+       - 9934:9933
+       - 30334:30333
+      volumes:
+       - parachain-2:/data
+      build:
+        context: .
+        dockerfile: parachain.Dockerfile
+      command:
+          - --base-path=/data
+          - --chain=/app/kerria-dev-2012.json
+          - --ws-external
+          - --rpc-external
+          - --rpc-cors=all
+          - --name=parachain-2
+          - --collator
+          - --rpc-methods=unsafe
+          - --force-authoring
+          - --wasm-execution=compiled
+          - --execution=wasm
+          - --bootnodes=/ip4/172.99.39.206/tcp/30337/p2p/12D3KooWHmC8ugzku81MSi68JaQ5pzrBQWhnXW9cCXXebkEeQpUL
+          - --
+          - --chain=/app/polkadot-local.json
+          - --bootnodes=/ip4/172.99.39.206/tcp/30333/p2p/12D3KooWSW78yqth6ysyK4Bc3dquKBZF68MqUKT8irD8qbKe2KjY
+          - --wasm-execution=compiled
+          - --execution=wasm
+
+volumes:
+  ? parachain-1
+  ? parachain-2
