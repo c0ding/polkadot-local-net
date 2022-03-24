@@ -1,0 +1,141 @@
+version: "3.7"
+services:
+  relaychain-alice:
+    ports:
+      - 9944:9944
+      - 9933:9933
+      - 30333:30333
+    volumes:
+      - relaychain-alice:/data
+    build:
+      context: .
+      dockerfile: relaychain.Dockerfile
+    command:
+      - --base-path=/data
+      - --chain=/app/polkadot-local.json
+      - --validator
+      - --ws-external
+      - --rpc-external
+      - --rpc-cors=all
+      - --name=alice
+      - --alice
+      - --rpc-methods=unsafe
+      - --wasm-execution=compiled
+      - --execution=wasm
+      - --node-key=25b8fe6492aaf337bf23e360e94df742e54fb2fc8bf5a019b6b1b41119c1d9ca
+    environment: {}
+    ulimits:
+      &a1
+      nofile:
+        soft: 65536
+        hard: 65536
+  relaychain-bob:
+    ports:
+      - 9945:9944
+      - 9934:9933
+      - 30334:30333
+    volumes:
+      - relaychain-bob:/data
+    build:
+      context: .
+      dockerfile: relaychain.Dockerfile
+    command:
+      - --base-path=/data
+      - --chain=/app/polkadot-local.json
+      - --validator
+      - --ws-external
+      - --rpc-external
+      - --rpc-cors=all
+      - --name=bob
+      - --bob
+      - --rpc-methods=unsafe
+      - --wasm-execution=compiled
+      - --execution=wasm
+    environment: {}
+    ulimits: *a1
+  relaychain-charlie:
+    ports:
+      - 9946:9944
+      - 9935:9933
+      - 30335:30333
+    volumes:
+      - relaychain-charlie:/data
+    build:
+      context: .
+      dockerfile: relaychain.Dockerfile
+    command:
+      - --base-path=/data
+      - --chain=/app/polkadot-local.json
+      - --validator
+      - --ws-external
+      - --rpc-external
+      - --rpc-cors=all
+      - --name=charlie
+      - --charlie
+      - --rpc-methods=unsafe
+      - --wasm-execution=compiled
+      - --execution=wasm
+    environment: {}
+    ulimits: *a1
+  relaychain-dave:
+    ports:
+      - 9947:9944
+      - 9936:9933
+      - 30336:30333
+    volumes:
+      - relaychain-dave:/data
+    build:
+      context: .
+      dockerfile: relaychain.Dockerfile
+    command:
+      - --base-path=/data
+      - --chain=/app/polkadot-local.json
+      - --validator
+      - --ws-external
+      - --rpc-external
+      - --rpc-cors=all
+      - --name=dave
+      - --dave
+      - --rpc-methods=unsafe
+      - --wasm-execution=compiled
+      - --execution=wasm
+    environment: {}
+    ulimits: *a1
+  parachain-2012-0:
+    ports:
+      - 9948:9944
+      - 9937:9933
+      - 30337:30333
+    volumes:
+      - parachain-2012-0:/data
+    build:
+      context: .
+      dockerfile: parachain-2012.Dockerfile
+    command:
+      - --base-path=/data
+      - --alice
+      - --chain=/app/kerria-dev-2012.json
+      - --ws-external
+      - --rpc-external
+      - --rpc-cors=all
+      - --name=parachain-2012-0
+      - --collator
+      - --rpc-methods=unsafe
+      - --force-authoring
+      - --wasm-execution=compiled
+      - --execution=wasm
+      - --node-key=7b831ac3a2804d1f220f27b9e8052992267a9a2949bf096a741bbb4a4f722e6d
+      - --listen-addr=/ip4/0.0.0.0/tcp/30333
+      - --
+      - --chain=/app/polkadot-local.json
+      - --bootnodes=/ip4/172.99.39.206/tcp/30333/p2p/12D3KooWSW78yqth6ysyK4Bc3dquKBZF68MqUKT8irD8qbKe2KjY
+      - --wasm-execution=compiled
+      - --execution=wasm
+    environment: {}
+    ulimits: *a1
+volumes:
+  ? relaychain-alice
+  ? relaychain-bob
+  ? relaychain-charlie
+  ? relaychain-dave
+  ? parachain-2012-0
